@@ -1,0 +1,201 @@
+<!--
+    Copyright Fernando Pelliccioni 2019-2021
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Math Timeline</title>
+    <!-- <link href="/favicon.png" rel="icon"> -->
+    <!-- <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:300&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
+    <!-- <link rel="stylesheet" href="{{ site.url }}/assets/css/algorithms/styles/monokai-sublime.css"> -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="./assets/js/two.min.js"></script>
+</head>
+
+<!-- <body> -->
+<body style="height: 100%">
+    <div id="sequence"></div>
+    <script>
+        var year_from = -5500;
+        var year_to   =  2100;
+        var year_from_x = 50;
+        var year_step = 500;
+
+
+        function drawPeriod(two, name, yearF, yearT, color, level) {
+            var yearFX = yearX(two, yearF);
+            var yearTX = yearX(two, yearT);
+            var w = yearTX - yearFX;
+
+            console.log(yearFX);
+
+            var x = yearFX + w / 2;
+            var y = two.height / 2 + 50 * level;
+
+            var line = two.makeRectangle(x, y, w, 3);
+            line.fill = color;
+            line.stroke = color;
+            line.linewidth = 0;
+
+
+            var text = two.makeText(name, x, y + 20);
+            text.family = "FiraCode"; //"Source Code Pro";
+            text.fill = color;
+            // text.alignment = 'left';
+        }
+
+        function drawYear(two, year, x, y) {
+            // x = 30;
+            // y = two.height / 2;
+
+            var y_5500 = two.makeCircle(x, y, 5);
+            y_5500.stroke = "white";
+            y_5500.fill = "white";
+
+            var text = two.makeText(year, x, y + 20);
+            text.family = "FiraCode"; //"Source Code Pro";
+            // text.size = fontSize
+            text.fill = 'white';
+
+            if (year % 1000 == 0) {
+                // text.style = 'bold';
+                // text.weight = 2000;
+                // text.linewidth = 2;
+                text.size = text.size + 3;
+            }
+
+        }
+
+        function yearX(two, year) {
+            var years = year_to - year_from;
+            // console.log(years);
+            var steps = years / year_step;
+            // console.log(steps);
+            var real_width = two.width - year_from_x * 2;
+            // console.log(real_width);
+            // console.log(year);
+            // console.log(year_from);
+            // console.log(year - year_from);
+
+            return year_from_x +
+                   real_width * (year - year_from) / years;
+        }
+
+        function timeline1(two) {
+            var line = two.makeRectangle(0, two.height / 2, two.width * 2, 5);
+            line.fill = "white";
+            line.linewidth = 0;
+
+            var years = year_to - year_from;
+            // console.log(years);
+            var steps = years / year_step;
+            // console.log(steps);
+            var x_step = (two.width - year_from_x * 2) / steps;
+            // console.log(x_step);
+
+
+            var x = year_from_x;
+            var y = two.height / 2;
+
+            for (let year = year_from; year <= year_to; year += year_step) {
+                var year_str = year == 0 ? "" : year;
+                drawYear(two, year_str, x, y);
+
+                // if (year == 0) {
+                //     console.log("year 0 X: ", x);
+                // }
+                if (year == -5500) {
+                    console.log("year -5500 X: ", x);
+                }
+
+                x += x_step;
+            }
+
+            var y0x = yearX(two, 0);
+            // console.log("y0x: ", y0x);
+
+            // var y0x = yearX(two, -5500);
+            // console.log("y-5500x: ", y0x);
+
+
+            // var y0hole = two.makeLine(y0x, 0, y0x, two.height);
+            // y0hole.stroke = "black";
+
+            var y0hole = two.makeRectangle(y0x, 0, 1, two.height * 2);
+            y0hole.fill = "black";
+
+
+            drawPeriod(two, 'Predynastic Egypt', -5500, -3160, '#a79b0b', 1);
+            drawPeriod(two, 'Ancient Egypt', -3149, -332, '#a79b0b', 1);
+
+
+            // drawPeriod(two, 'Classical Greece', -550, -323, '#1898e0', 2);
+            // drawPeriod(two, 'Hellenistic period', -322, -31, '#1898e0', 3);
+            drawPeriod(two, ' Ancient Greece', -550, -31, '#1898e0', 2);
+
+            drawPeriod(two, 'Roman Empire', -27, 476, '#1898e0', 2);
+
+            drawPeriod(two, 'Middle Ages', 477, 1492, '#8a8f92', 2);
+
+            // drawPeriod(two, 'Rashidun Caliphate', 632, 661, '#b15d42', 3);
+            // drawPeriod(two, 'Umayyad Caliphate',  662, 750, '#b15d42', 4);
+            // drawPeriod(two, 'Abbasid Caliphate',  751, 1517, '#b15d42', 3);
+            drawPeriod(two, 'Caliphates', 632, 1517, '#b15d42', 3);
+
+
+
+
+            two.update();
+
+        }
+
+        var iterators_colors = ['#afafff', '#ffaff7', '#fdffaf'
+                                , '#affffb', '#ffe2af', '#d0afff', '#e1ffaf', '#ffafb9'];
+
+        // var two_width = document.getElementById('hg-right-a').offsetWidth
+        // var two_height = document.getElementById('hg-right-a').offsetHeight
+        // console.log(two_width);
+        // console.log(two_height);
+
+
+        var two_width = document.getElementById('sequence').offsetWidth * 2;
+        var two_height = document.getElementById('sequence').offsetHeight * 2;
+        // console.log(two_width);
+        // console.log(two_height);
+
+        var two = new Two({
+                fullscreen: true,
+                // width: two_width,
+                // height: two_height,
+                autostart: true,
+        }).appendTo(sequence);
+
+        // console.log(two.width);
+        // console.log(two.height);
+
+        // var two_width = two.width;
+        // var two_height = two.height;
+
+        // var rect = two.makeRectangle(0, 0, two_width, two_height);
+        // rect.fill = 'rgb(0, 200, 255)';
+        // rect.opacity = 0.75;
+        // rect.noStroke();
+
+
+        // var line = two.makeLine(0,
+        //                         two.height / 2,
+        //                         two.width,
+        //                         two.height / 2);
+        // line.stroke = "white";
+
+        timeline1(two);
+    </script>
+</body>
+</html>
+
+

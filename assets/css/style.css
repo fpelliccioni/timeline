@@ -1,0 +1,23 @@
+/* div { */
+    /* height: 100vh; */
+    /* display: block; */
+    /* position: relative; */
+    /* bottom: 0; */
+    /* height: 100%; */
+/* } */
+
+
+@font-face {
+    font-family: 'FiraCode';
+    src:  url('../fonts/FiraCode-Regular.woff2') format('woff2'),
+          url('../fonts/FiraCode-Regular.woff') format('woff');
+}
+
+div {
+    background: #2C3C4E;
+    height: 100vh;
+}
+
+body {
+    margin: 0px;
+}
