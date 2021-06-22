@@ -25,7 +25,43 @@
         var year_to   =  2100;
         var year_from_x = 50;
         var year_step = 500;
+        var defaultTextSize = 13;
+        var background;
+        var foreground;
 
+
+        function textWidht(text) {
+            console.log(text.size);
+            var textW = text.value.length * text.size * Two.Text.Ratio;
+            console.log(textW);
+            return textW;
+        }
+
+        function textWidht2(value, fontSize) {
+            console.log(fontSize);
+            var textW = value.length * fontSize * Two.Text.Ratio;
+            console.log(textW);
+            return textW;
+        }
+
+        function drawDashedLine(two, x, topY, height, color) {
+            var y = topY;
+            var segmentHeight = 10;
+            while (y < topY + height) {
+                var line = two.makeRectangle(x, y, 3, segmentHeight);
+                line.fill = color;
+                line.stroke = color;
+                line.linewidth = 0;
+                line.opacity = 0.5;
+                background.add(line);
+                y += segmentHeight * 1.5;
+            }
+
+            var point = two.makeCircle(x, topY + height, 3);
+            point.stroke = color;
+            point.fill = color;
+            // point.opacity = 0.5;
+        }
 
         function drawPeriod(two, name, yearF, yearT, color, level) {
             var yearFX = yearX(two, yearF);
@@ -37,7 +73,7 @@
             var x = yearFX + w / 2;
             var y = two.height / 2 + 50 * level;
 
-            var line = two.makeRectangle(x, y, w, 3);
+            var line = two.makeRectangle(x, y, w, 10);
             line.fill = color;
             line.stroke = color;
             line.linewidth = 0;
@@ -46,6 +82,7 @@
             var text = two.makeText(name, x, y + 20);
             text.family = "FiraCode"; //"Source Code Pro";
             text.fill = color;
+            text.size = text.size + 3;
             // text.alignment = 'left';
         }
 
@@ -71,6 +108,66 @@
 
         }
 
+        function drawEvent1(two, name, year, color, textColor, level) {
+            var x = yearX(two, year);
+
+            // var y = two.height / 2 - 150;
+            var y = two.height / 2 - 100 * level;
+            var fontSize = defaultTextSize + 3;
+
+            var triangleUp = two.makePolygon(x, y - 25, 10); //, sides);
+            triangleUp.fill = color;
+            triangleUp.stroke = color;
+
+            var triangleDown = two.makePolygon(x, y + 25, 10); //, sides);
+            triangleDown.fill = color;
+            triangleDown.stroke = color;
+            triangleDown.rotation = Math.PI;
+
+            var textW = textWidht2(name, fontSize);
+            var rect = two.makeRoundedRectangle(x, y, textW + 40, 40);
+            rect.fill = color;
+            rect.stroke = color;
+
+            var text = two.makeText(name, x, y);
+            text.family = "FiraCode";
+            text.fill = textColor;
+            text.size = fontSize;
+
+            var line = two.makeRectangle(x, y, 3, two.height * 2);
+            line.fill = color;
+            line.stroke = color;
+            line.linewidth = 0;
+            background.add(line);
+        }
+
+        function drawEvent2(two, name, year, color, textColor, level) {
+            var x = yearX(two, year);
+
+            // var y = two.height / 2 - 150;
+            var y = two.height / 2 - 100 * level;            
+            var fontSize = defaultTextSize + 3;
+
+            var triangleDown = two.makePolygon(x, y + 25, 10); //, sides);
+            triangleDown.fill = color;
+            triangleDown.stroke = color;
+            triangleDown.rotation = Math.PI;
+
+            var textW = textWidht2(name, fontSize);
+            var rect = two.makeRoundedRectangle(x, y, textW + 40, 40);
+            rect.fill = color;
+            rect.stroke = color;
+
+            var text = two.makeText(name, x, y);
+            text.family = "FiraCode";
+            text.fill = textColor;
+            text.size = fontSize;
+
+
+            var height = two.height / 2 - (y + 45) - 10;
+            drawDashedLine(two, x, y + 45, height, color);
+        }
+
         function yearX(two, year) {
             var years = year_to - year_from;
             // console.log(years);
@@ -92,12 +189,8 @@
             line.linewidth = 0;
 
             var years = year_to - year_from;
-            // console.log(years);
             var steps = years / year_step;
-            // console.log(steps);
             var x_step = (two.width - year_from_x * 2) / steps;
-            // console.log(x_step);
-
 
             var x = year_from_x;
             var y = two.height / 2;
@@ -117,23 +210,14 @@
             }
 
             var y0x = yearX(two, 0);
-            // console.log("y0x: ", y0x);
-
-            // var y0x = yearX(two, -5500);
-            // console.log("y-5500x: ", y0x);
-
-
-            // var y0hole = two.makeLine(y0x, 0, y0x, two.height);
-            // y0hole.stroke = "black";
-
             var y0hole = two.makeRectangle(y0x, 0, 1, two.height * 2);
             y0hole.fill = "black";
 
 
+            // Information ------------------------------------------------------------------------------------------------------------------------
+
             drawPeriod(two, 'Predynastic Egypt', -5500, -3160, '#a79b0b', 1);
             drawPeriod(two, 'Ancient Egypt', -3149, -332, '#a79b0b', 1);
-
-
             // drawPeriod(two, 'Classical Greece', -550, -323, '#1898e0', 2);
             // drawPeriod(two, 'Hellenistic period', -322, -31, '#1898e0', 3);
             drawPeriod(two, ' Ancient Greece', -550, -31, '#1898e0', 2);
@@ -148,7 +232,19 @@
             drawPeriod(two, 'Caliphates', 632, 1517, '#b15d42', 3);
 
 
+            drawEvent1(two, "First Algorithm", -2000, "#a79b0b", "white", 1);
+            drawEvent2(two, "Moscow Mathematical Papyrus", -1850, "#a79b0b", "white", 2);
+            drawEvent2(two, "Rhind Mathematical Papyrus", -1650, "#a79b0b", "white", 3);
+            drawEvent2(two, "Pyramids", -2700, "#a79b0b", "white", 1);
 
+
+            // drawEvent1(two, "Bitcoin: A P2P Electronic Cash System", 2008, "#0ac18e", "white", 1);       // 31-Oct-2008
+            drawEvent1(two, "Bitcoin", 2008, "#0ac18e", "white", 1);       // 31-Oct-2008
+            
+
+            drawEvent1(two, "Marathon", -490, "#2850ce", "white", -3);
+
+            
 
             two.update();
 
@@ -174,6 +270,8 @@
                 // height: two_height,
                 autostart: true,
         }).appendTo(sequence);
+        background = two.makeGroup();
+        foreground = two.makeGroup();
 
         // console.log(two.width);
         // console.log(two.height);
