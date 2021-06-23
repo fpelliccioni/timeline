@@ -13,6 +13,11 @@
           url('../fonts/FiraCode-Regular.woff') format('woff');
 }
 
+@font-face {
+    font-family: 'FellTypeRoman';
+    src:  url('../fonts/Historical-FellType-Roman.otf') format('opentype');
+}
+
 div {
     background: #2C3C4E;
     height: 100vh;
