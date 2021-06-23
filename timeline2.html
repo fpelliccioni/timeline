@@ -22,10 +22,10 @@
 <body style="height: 100%">
     <div id="sequence"></div>
     <script>
-        var year_from = -5500;
+        var year_from = -3000;
         var year_to   =  2100;
         var year_from_x = 50;
-        var year_step = 500;
+        var year_step = 250;
         var background;
         var foreground;
 
@@ -77,13 +77,16 @@
         drawEvent2(two, "Moscow Mathematical Papyrus", -1850, "#a79b0b", "white", 2);
         drawEvent2(two, "Rhind Mathematical Papyrus", -1550, "#a79b0b", "white", 3);
         drawEvent2(two, "Pyramids", -2700, "#a79b0b", "white", 1);
+        drawPerson(two, "Ahmes", -1575, -1525, "#a79b0b", "white", 1);
 
 
         // drawEvent1(two, "Bitcoin: A P2P Electronic Cash System", 2008, "#0ac18e", "white", 1);       // 31-Oct-2008
         drawEvent1(two, "Bitcoin", 2008, "#0ac18e", "white", 1);       // 31-Oct-2008
 
-
         drawEvent1(two, "Marathon", -490, "#2850ce", "white", -3);
+
+
+
         // Information ------------------------------------------------------------------------------------------------------------------------
 
         two.update();
