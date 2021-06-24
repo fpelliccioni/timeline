@@ -46,7 +46,7 @@ function drawPeriod(two, name, yearF, yearT, color, level) {
     var w = yearTX - yearFX;
 
     var x = yearFX + w / 2;
-    var y = two.height / 2 + 50 * level;
+    var y = getPos(two) + 50 * level;
 
     var line = two.makeRectangle(x, y, w, 10);
     line.fill = color;
@@ -63,23 +63,20 @@ function drawPeriod(two, name, yearF, yearT, color, level) {
 }
 
 function drawYear(two, year, x, y) {
-    // x = 30;
-    // y = two.height / 2;
-
     var y_5500 = two.makeCircle(x, y, 5);
     y_5500.stroke = "white";
     y_5500.fill = "white";
 
     var text = two.makeText(year, x, y + 20);
     text.family = font_family; //"Source Code Pro";
-    text.size = defaultTextSize;
+    text.size = defaultTextSize - 2;
     text.fill = 'white';
 
-    if (year % 1000 == 0) {
+    if (year % year_highlighted == 0) {
         // text.style = 'bold';
-        // text.weight = 2000;
+        text.weight = 600;
         // text.linewidth = 2;
-        text.size = text.size + 3;
+        text.size = text.size + 2;
     }
 
 }
@@ -87,8 +84,7 @@ function drawYear(two, year, x, y) {
 function drawEvent1(two, name, year, color, textColor, level) {
     var x = yearX(two, year);
 
-    // var y = two.height / 2 - 150;
-    var y = two.height / 2 - 100 * level;
+    var y = getPos(two) - 100 * level;
     var fontSize = defaultTextSize + 3;
 
     var triangleUp = two.makePolygon(x, y - 25, 10); //, sides);
@@ -120,8 +116,7 @@ function drawEvent1(two, name, year, color, textColor, level) {
 function drawEvent2(two, name, year, color, textColor, level) {
     var x = yearX(two, year);
 
-    // var y = two.height / 2 - 150;
-    var y = two.height / 2 - 100 * level;
+    var y = getPos(two) - 100 * level;
     var fontSize = defaultTextSize + 3;
 
     var triangleDown = two.makePolygon(x, y + 25, 10); //, sides);
@@ -139,7 +134,7 @@ function drawEvent2(two, name, year, color, textColor, level) {
     text.fill = textColor;
     text.size = fontSize;
 
-    var height = two.height / 2 - (y + 45) - 10;
+    var height = getPos(two) - (y + 45) - 10;
     drawDashedLine(two, x, y + 45, height, color);
 }
 
@@ -158,8 +153,18 @@ function yearX(two, year) {
             real_width * (year - year_from) / years;
 }
 
+function getPos(two) {
+    var pos = (typeof(timeline_pos) !== 'undefined') ?  timeline_pos : 1 / 2;
+    // console.log(pos);
+    var ret = two.height * pos;
+    // console.log(ret);
+    return ret;
+}
 function drawTimeline(two) {
-    var line = two.makeRectangle(0, two.height / 2, two.width * 2, 5);
+    var x = year_from_x;
+    var y = getPos(two);
+
+    var line = two.makeRectangle(0, y, two.width * 2, 5);
     line.fill = "white";
     line.linewidth = 0;
 
@@ -167,10 +172,6 @@ function drawTimeline(two) {
     var steps = years / year_step;
     var x_step = (two.width - year_from_x * 2) / steps;
 
-    var x = year_from_x;
-    var y = two.height / 2;
-
-    // 
     for (let year = year_from; year <= year_to; year += year_step) {
         var year_str = year == 0 ? "" : year;
         drawYear(two, year_str, x, y);
@@ -180,7 +181,7 @@ function drawTimeline(two) {
         line.stroke = "#354353";
         line.linewidth = 0;
         background.add(line);
-    
+
 
         // if (year == 0) {
         //     console.log("year 0 X: ", x);
@@ -204,7 +205,7 @@ function drawPerson(two, name, yearF, yearT, color, textColor, level) {
     var w = yearTX - yearFX;
 
     var x = yearFX + w / 2;
-    var y = two.height / 2 - 70 * level;
+    var y = getPos(two) - 70 * level;
 
     var line = two.makeRoundedRectangle(x, y, w, 25);
     line.fill = color;
@@ -214,6 +215,6 @@ function drawPerson(two, name, yearF, yearT, color, textColor, level) {
 
     drawMultiText(two, name, x, y - 25, font_family, textColor, defaultTextSize + 3);
 
-    var height = two.height / 2 - (y + 22) - 10;
+    var height = getPos(two) - (y + 22) - 10;
     drawDashedLine(two, x, y + 22, height, color);
 }

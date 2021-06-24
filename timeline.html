@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <script src="./assets/js/two.min.js"></script>
     <script src="./assets/js/helpers.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+    </style>
+
 </head>
 
 <!-- <body> -->
@@ -26,6 +31,7 @@
         var year_to   =  2100;
         var year_from_x = 50;
         var year_step = 500;
+        var year_highlighted = 1000;
         var background;
         var foreground;
 
@@ -34,12 +40,17 @@
         // var roundedRectangleWidthDelta = 40;
         // var textWidthFactor = 1;
 
-        var font_family = "FellTypeRoman";
-        var defaultTextSize = 20;
-        var roundedRectangleWidthDelta = 0;
-        var textWidthFactor = 0.9;
+        // var font_family = "FellTypeRoman";
+        // var defaultTextSize = 20;
+        // var roundedRectangleWidthDelta = 0;
+        // var textWidthFactor = 0.9;
 
- 
+        var font_family = "Open Sans";
+        var defaultTextSize = 14;
+        var roundedRectangleWidthDelta = 20;
+        var textWidthFactor = 1;
+
+
         var two_width = document.getElementById('sequence').offsetWidth * 2;
         var two_height = document.getElementById('sequence').offsetHeight * 2;
 
@@ -52,7 +63,7 @@
         background = two.makeGroup();
         foreground = two.makeGroup();
 
- 
+
         drawTimeline(two);
 
         // Information ------------------------------------------------------------------------------------------------------------------------
@@ -81,6 +92,7 @@
 
         // drawEvent1(two, "Bitcoin: A P2P Electronic Cash System", 2008, "#0ac18e", "white", 1);       // 31-Oct-2008
         drawEvent1(two, "Bitcoin", 2008, "#0ac18e", "white", 1);       // 31-Oct-2008
+        drawEvent1(two, "Today", new Date().getFullYear(), "#8a8f92", "white", -1);
 
 
         drawEvent1(two, "Marathon", -490, "#2850ce", "white", -3);
