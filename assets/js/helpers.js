@@ -1,3 +1,15 @@
+function saveSVG(document, window) {
+
+    var path = window.location.pathname;
+    var page = path.split("/").pop().split(".").slice(0, -1).join(".");
+    console.log( page );
+
+    var svg = document.getElementById("sequence").innerHTML;
+    // console.log(svg);
+
+    var blob = new Blob([svg], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, page + ".svg");
+}
 
 function drawMultiText(two, fulltext, x, y, font, color, size) {
     var texts = fulltext.split('\n');
@@ -106,7 +118,7 @@ function drawEvent1(two, name, year, color, textColor, level) {
     text.fill = textColor;
     text.size = fontSize;
 
-    var line = two.makeRectangle(x, y, 3, two.height * 2);
+    var line = two.makeRectangle(x, two.height / 2, 3, two.height);
     line.fill = color;
     line.stroke = color;
     line.linewidth = 0;
@@ -161,10 +173,16 @@ function getPos(two) {
     return ret;
 }
 function drawTimeline(two) {
+    var backRect = two.makeRectangle(two.width / 2, two.height / 2, two.width, two.height);
+    backRect.fill = '#2C3C4E';
+    backRect.stroke = '#2C3C4E';
+    backRect.linewidth = 0;
+    background.add(backRect);
+
     var x = year_from_x;
     var y = getPos(two);
 
-    var line = two.makeRectangle(0, y, two.width * 2, 5);
+    var line = two.makeRectangle(two.width / 2, y, two.width, 5);
     line.fill = "white";
     line.linewidth = 0;
 
@@ -176,25 +194,17 @@ function drawTimeline(two) {
         var year_str = year == 0 ? "" : year;
         drawYear(two, year_str, x, y);
 
-        var line = two.makeRectangle(x, y, 1, two.height * 2);
+        var line = two.makeRectangle(x, two.height / 2, 1, two.height);
         line.fill = "#354353";
         line.stroke = "#354353";
         line.linewidth = 0;
         background.add(line);
 
-
-        // if (year == 0) {
-        //     console.log("year 0 X: ", x);
-        // }
-        // if (year == -5500) {
-        //     console.log("year -5500 X: ", x);
-        // }
-
         x += x_step;
     }
 
     var y0x = yearX(two, 0);
-    var y0hole = two.makeRectangle(y0x, 0, 1, two.height * 2);
+    var y0hole = two.makeRectangle(y0x, two.height / 2, 1, two.height);
     y0hole.fill = "black";
 }
 
