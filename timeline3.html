@@ -37,7 +37,7 @@
             // console.log(e)
             // console.log(e.keyCode)
 
-            if (e.ctrlKey && e.keyCode == 83) {
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 83) {
                 saveSVG(document, window);
             }
         };
@@ -92,7 +92,7 @@
 
         // drawPeriod(two, 'Classical Greece', -550, -323, '#1898e0', 2);
         // drawPeriod(two, 'Hellenistic period', -322, -31, '#1898e0', 3);
-        drawPeriod(two, ' Ancient Greece', -550, -31, '#1898e0', 2);
+        drawPeriod(two, 'Ancient Greece', -550, -31, '#1898e0', 2);
 
         drawPeriod(two, 'Roman Empire', -27, 476, '#1898e0', 2);
 

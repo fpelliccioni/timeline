@@ -33,7 +33,7 @@
             // console.log(e)
             // console.log(e.keyCode)
 
-            if (e.ctrlKey && e.keyCode == 83) {
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 83) {
                 saveSVG(document, window);
             }
         };
@@ -41,7 +41,7 @@
 
         var year_from = -2000;
         var year_to   =  2100;
-        var year_from_x = 150;
+        var year_from_x = 100;
         var year_step = 200;
         var year_highlighted = 1000;
         var background;
@@ -82,7 +82,7 @@
         drawPeriod(two, 'Ancient Egypt', -2300, -332, '#a79b0b', 1);
         // drawPeriod(two, 'Classical Greece', -550, -323, '#1898e0', 2);
         // drawPeriod(two, 'Hellenistic period', -322, -31, '#1898e0', 3);
-        drawPeriod(two, ' Ancient\nGreece', -550, -31, '#1898e0', 2);
+        drawPeriod(two, 'Ancient\nGreece', -550, -31, '#1898e0', 2);
 
         drawPeriod(two, 'Roman\nEmpire', -27, 476, '#1898e0', 2);
 
