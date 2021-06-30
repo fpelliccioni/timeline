@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <script src="./assets/js/two.min.js"></script>
     <script src="./assets/js/helpers.js"></script>
+    <script src="./assets/js/FileSaver.min.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
@@ -27,6 +28,16 @@
 <body style="height: 100%">
     <div id="sequence"></div>
     <script>
+        document.onkeydown = function (e) {
+            e = e || window.event;
+            // console.log(e)
+            // console.log(e.keyCode)
+
+            if (e.ctrlKey && e.keyCode == 83) {
+                saveSVG(document, window);
+            }
+        };
+
         var year_from = -3000;
         var year_to   =  2100;
         var year_from_x = 50;
