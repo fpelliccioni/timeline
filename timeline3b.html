@@ -50,6 +50,7 @@
         var timeline_pos = 2 / 3;
         var background;
         var foreground;
+        var diagonal;
 
         // var font_family = "FiraCode";
         // var defaultTextSize = 13;
@@ -71,6 +72,12 @@
 
         console.log('two_width: ', two_width);
         console.log('two_height: ', two_height);
+        
+
+        diagonal = Math.hypot(two_width, two_height);
+
+        console.log('diagonal: ', diagonal);
+        
 
         var two = new Two({
                 fullscreen: true,
@@ -80,6 +87,8 @@
         }).appendTo(sequence);
         background = two.makeGroup();
         foreground = two.makeGroup();
+        console.log('two.width: ', two.width);
+        console.log('two.height: ', two.height);
 
 
         drawTimeline(two);
