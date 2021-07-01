@@ -45,7 +45,7 @@
         var year_from = -800;
         var year_to   =  2100;
         var year_from_x = 50;
-        var year_step = 100;
+        var year_step = 200;
         var year_highlighted = 1000;
         var timeline_pos = 2 / 3;
         var background;
@@ -62,13 +62,15 @@
         // var textWidthFactor = 0.9;
 
         var font_family = "Open Sans";
-        var defaultTextSize = 14;
+        var defaultTextSize = 20;
         var roundedRectangleWidthDelta = 20;
         var textWidthFactor = 1;
 
-
         var two_width = document.getElementById('sequence').offsetWidth * 2;
         var two_height = document.getElementById('sequence').offsetHeight * 2;
+
+        console.log('two_width: ', two_width);
+        console.log('two_height: ', two_height);
 
         var two = new Two({
                 fullscreen: true,

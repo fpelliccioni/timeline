@@ -23,12 +23,12 @@ function drawMultiText(two, fulltext, x, y, font, color, size) {
     }
 }
 
-function textWidht(text) {
+function textWidth(text) {
     var textW = text.value.length * text.size * Two.Text.Ratio * textWidthFactor;
     return textW;
 }
 
-function textWidht2(value, fontSize) {
+function textWidth2(value, fontSize) {
     var textW = value.length * fontSize * Two.Text.Ratio * textWidthFactor;
     return textW;
 }
@@ -108,7 +108,7 @@ function drawEvent1(two, name, year, color, textColor, level) {
     triangleDown.stroke = color;
     triangleDown.rotation = Math.PI;
 
-    var textW = textWidht2(name, fontSize);
+    var textW = textWidth2(name, fontSize);
     var rect = two.makeRoundedRectangle(x, y, textW + roundedRectangleWidthDelta, 40);
     rect.fill = color;
     rect.stroke = color;
@@ -136,7 +136,7 @@ function drawEvent2(two, name, year, color, textColor, level) {
     triangleDown.stroke = color;
     triangleDown.rotation = Math.PI;
 
-    var textW = textWidht2(name, fontSize);
+    var textW = textWidth2(name, fontSize);
     var rect = two.makeRoundedRectangle(x, y, textW + roundedRectangleWidthDelta, 40);
     rect.fill = color;
     rect.stroke = color;
@@ -176,6 +176,8 @@ function drawTimeline(two) {
     var backRect = two.makeRectangle(two.width / 2, two.height / 2, two.width, two.height);
     backRect.fill = '#2C3C4E';
     backRect.stroke = '#2C3C4E';
+    // backRect.fill = '#212121';
+    // backRect.stroke = '#212121';
     backRect.linewidth = 0;
     background.add(backRect);
 
