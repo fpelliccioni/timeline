@@ -1,13 +1,21 @@
 // Desktop: 5874.4191202194625
 // Mac:     4226.423547161358
-var defaultDiagonal = 4226.423547161358;
-var defaultWidth = 3584;
-var defaultHeight = 2240;
+
+// Mac:
+// var defaultDiagonal = 4226.423547161358;
+// var defaultWidth = 3584;
+// var defaultHeight = 2240;
+
+// Desktop:
+var defaultDiagonal = 5874.4191202194625;
+var defaultWidth = 5120;
+var defaultHeight = 2880;
 
 function textSize(delta) {
     delta = (typeof(delta) !== 'undefined') ?  delta : 0;
     var size = defaultTextSize + delta;
-    var ret = size * diagonal / defaultDiagonal;
+    // var ret = size * diagonal / defaultDiagonal;
+    var ret = adjustDiagonal(size);
     return ret;
 }
 
@@ -25,6 +33,12 @@ function adjustWidth(w) {
     return ret;
 }
 
+function adjustDiagonal(d) {
+    var ret = d * diagonal / defaultDiagonal;
+    console.log("d: ", d);
+    console.log("ret: ", ret);
+    return ret;
+}
 
 function saveSVG(document, window) {
 
@@ -47,7 +61,7 @@ function drawMultiText(two, fulltext, x, y, font, color, size) {
         text_elem.family = font;
         text_elem.fill = color;
         text_elem.size = size;
-        y += 20;
+        y += adjustHeight(25);
     }
 }
 
@@ -80,37 +94,50 @@ function drawDashedLine(two, x, topY, height, color) {
     // point.opacity = 0.5;
 }
 
+function levelPosition(two, level) {
+    var y = getPos(two) + adjustHeight(firstPeriodStart);
+    if (level == 1) {
+        return y;
+    }
+    return y + adjustHeight(85) * (level - 1);
+}
+
 function drawPeriod(two, name, yearF, yearT, color, level) {
     var yearFX = yearX(two, yearF);
     var yearTX = yearX(two, yearT);
     var w = yearTX - yearFX;
 
     var x = yearFX + w / 2;
-    var y = getPos(two) + 50 * level;
+    // var y = getPos(two) + adjustHeight(70) * level;
+    var y = levelPosition(two, level);
 
-    var line = two.makeRectangle(x, y, w, 10);
+    var line = two.makeRectangle(x, y, w, adjustHeight(20));
     line.fill = color;
     line.stroke = color;
     line.linewidth = 0;
 
-    drawMultiText(two, name, x, y + 20, font_family, color, textSize(3));
+    drawMultiText(two, name, x, y + adjustHeight(28), font_family, color, textSize(3));
 }
 
 function drawYear(two, year, x, y) {
-    var y_5500 = two.makeCircle(x, y, 5);
-    y_5500.stroke = "white";
-    y_5500.fill = "white";
+    var y_5500 = two.makeCircle(x, y, adjustDiagonal(9));
+    // y_5500.stroke = "white";
+    // y_5500.fill = "white";
+    y_5500.stroke = "#d8d8d8";
+    y_5500.fill = "#d8d8d8";
 
-    var text = two.makeText(year, x, y + 20);
+    var text = two.makeText(year, x, y + adjustHeight(25));
     text.family = font_family; //"Source Code Pro";
-    text.size = textSize(-2);
-    text.fill = 'white';
+    text.size = textSize(-4);
+    // text.fill = 'white';
+    text.fill = '#d8d8d8';
+    text.weight = 400;
 
     if (year % year_highlighted == 0) {
         // text.style = 'bold';
         text.weight = 600;
         // text.linewidth = 2;
-        text.size = text.size + 4;
+        text.size = textSize(1);
     }
 
 }
@@ -135,7 +162,7 @@ function drawEvent1(two, name, year, color, textColor, level) {
     rect.fill = color;
     rect.stroke = color;
 
-    var text = two.makeText(name, x, y);
+    var text = two.makeText(name, x, y + adjustHeight(2));
     text.family = font_family;
     text.fill = textColor;
     text.size = fontSize;
@@ -194,6 +221,7 @@ function getPos(two) {
     // console.log(ret);
     return ret;
 }
+
 function drawTimeline(two) {
     var backRect = two.makeRectangle(two.width / 2, two.height / 2, two.width, two.height);
     backRect.fill = '#2C3C4E';
@@ -206,8 +234,9 @@ function drawTimeline(two) {
     var x = year_from_x;
     var y = getPos(two);
 
-    var line = two.makeRectangle(two.width / 2, y, two.width, 5);
-    line.fill = "white";
+    var line = two.makeRectangle(two.width / 2, y, two.width, adjustHeight(9));
+    // line.fill = "white";
+    line.fill = "#d8d8d8";
     line.linewidth = 0;
 
     var years = year_to - year_from;
@@ -218,7 +247,7 @@ function drawTimeline(two) {
         var year_str = year == 0 ? "" : year;
         drawYear(two, year_str, x, y);
 
-        var line = two.makeRectangle(x, two.height / 2, 1, two.height);
+        var line = two.makeRectangle(x, two.height / 2, adjustWidth(1), two.height);
         line.fill = "#354353";
         line.stroke = "#354353";
         line.linewidth = 0;
@@ -228,8 +257,19 @@ function drawTimeline(two) {
     }
 
     var y0x = yearX(two, 0);
-    var y0hole = two.makeRectangle(y0x, two.height / 2, 1, two.height);
-    y0hole.fill = "black";
+
+    var y0hole = two.makeRectangle(y0x, two.height / 2, adjustWidth(1), two.height);
+    // y0hole.fill = "black";
+    y0hole.fill = "#202932";
+    y0hole.linewidth = 0;
+
+    var y0holeLeft = two.makeRectangle(y0x - adjustWidth(1), two.height / 2, adjustWidth(0.5), two.height);
+    y0holeLeft.fill = "#283644";
+    y0holeLeft.linewidth = 0;
+    var y0holeRight = two.makeRectangle(y0x + adjustWidth(1), two.height / 2, adjustWidth(0.5), two.height);
+    y0holeRight.fill = "#232e3a";
+    y0holeRight.linewidth = 0;
+    
 }
 
 function drawPerson(two, name, yearF, yearT, color, textColor, level) {

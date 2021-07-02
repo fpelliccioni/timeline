@@ -48,6 +48,7 @@
         var year_step = 200;
         var year_highlighted = 1000;
         var timeline_pos = 2 / 3;
+        var firstPeriodStart = 70;
         var background;
         var foreground;
         // var two_width;
@@ -65,7 +66,7 @@
         // var textWidthFactor = 0.9;
 
         var font_family = "Open Sans";
-        var defaultTextSize = 22;
+        var defaultTextSize = 20;
         var roundedRectangleWidthDelta = 20;
         var textWidthFactor = 1;
 
@@ -93,9 +94,12 @@
 
         // Information ------------------------------------------------------------------------------------------------------------------------
 
-        drawPeriod(two, 'Ancient Egypt', -860, -332, '#a79b0b', 1);
+        // drawPeriod(two, 'Ancient Egypt', -860, -332, '#a79b0b', 1);
+        drawPeriod(two, 'Ancient Egypt', -860, -332, '#f0a912', 1);
+        
 
-        drawPeriod(two, 'Achaemenid Empire\n(Persian)', -550, -330, '#b6275a', 3);
+        // drawPeriod(two, 'Achaemenid Empire\n(Persian)', -550, -330, '#b6275a', 3);
+        drawPeriod(two, 'Achaemenid Empire\n(Persian)', -550, -330, '#f01239', 3);
 
 
         // drawPeriod(two, 'Classical Greece', -550, -323, '#1898e0', 2);
@@ -104,17 +108,22 @@
 
         drawPeriod(two, 'Roman Empire', -27, 476, '#1898e0', 2);
 
-        drawPeriod(two, 'Middle Ages', 477, 1492, '#8a8f92', 2);
+        // drawPeriod(two, 'Middle Ages', 477, 1492, '#8a8f92', 2);
+        drawPeriod(two, 'Middle Ages', 477, 1492, '#3d7798', 2);
+        
 
         // drawPeriod(two, 'Rashidun Caliphate', 632, 661, '#b15d42', 3);
         // drawPeriod(two, 'Umayyad Caliphate',  662, 750, '#b15d42', 4);
         // drawPeriod(two, 'Abbasid Caliphate',  751, 1517, '#b15d42', 3);
-        drawPeriod(two, 'Caliphates', 632, 1517, '#b15d42', 3);
+        // drawPeriod(two, 'Caliphates', 632, 1517, '#b15d42', 3);
+        drawPeriod(two, 'Caliphates', 632, 1517, '#bd5700', 3);
 
 
         // drawEvent1(two, "Bitcoin: A P2P Electronic Cash System", 2008, "#0ac18e", "white", 1);       // 31-Oct-2008
         drawEvent1(two, "Bitcoin", 2008, "#0ac18e", "white", 2);       // 31-Oct-2008
-        drawEvent1(two, "Today", new Date().getFullYear(), "#8a8f92", "white", -1);
+        // drawEvent1(two, "Today", new Date().getFullYear(), "#8a8f92", "white", -1);
+        drawEvent1(two, "Today", new Date().getFullYear(), "#21c8cc", "white", -1);
+        
 
         // drawEvent1(two, "Marathon", -490, "#1898e0", "white", -3);
 
