@@ -23,7 +23,7 @@
     </style> -->
 
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;800&display=swap');
     </style>
 
 </head>
@@ -50,6 +50,8 @@
         var timeline_pos = 2 / 3;
         var background;
         var foreground;
+        // var two_width;
+        // var two_height;
         var diagonal;
 
         // var font_family = "FiraCode";
@@ -63,7 +65,7 @@
         // var textWidthFactor = 0.9;
 
         var font_family = "Open Sans";
-        var defaultTextSize = 20;
+        var defaultTextSize = 22;
         var roundedRectangleWidthDelta = 20;
         var textWidthFactor = 1;
 
@@ -72,12 +74,8 @@
 
         console.log('two_width: ', two_width);
         console.log('two_height: ', two_height);
-        
-
         diagonal = Math.hypot(two_width, two_height);
-
         console.log('diagonal: ', diagonal);
-        
 
         var two = new Two({
                 fullscreen: true,

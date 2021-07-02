@@ -1,4 +1,29 @@
-// 5874.4191202194625
+// Desktop: 5874.4191202194625
+// Mac:     4226.423547161358
+var defaultDiagonal = 4226.423547161358;
+var defaultWidth = 3584;
+var defaultHeight = 2240;
+
+function textSize(delta) {
+    delta = (typeof(delta) !== 'undefined') ?  delta : 0;
+    var size = defaultTextSize + delta;
+    var ret = size * diagonal / defaultDiagonal;
+    return ret;
+}
+
+function adjustHeight(h) {
+    var ret = h * two_height / defaultHeight;
+    console.log("h: ", h);
+    console.log("ret: ", ret);
+    return ret;
+}
+
+function adjustWidth(w) {
+    var ret = w * two_width / defaultWidth;
+    console.log("w: ", w);
+    console.log("ret: ", ret);
+    return ret;
+}
 
 
 function saveSVG(document, window) {
@@ -68,13 +93,7 @@ function drawPeriod(two, name, yearF, yearT, color, level) {
     line.stroke = color;
     line.linewidth = 0;
 
-
-    drawMultiText(two, name, x, y + 20, font_family, color, defaultTextSize + 3);
-    // var text = two.makeText(name, x, y + 20);
-    // text.family = font_family; //"Source Code Pro";
-    // text.fill = color;
-    // text.size = defaultTextSize + 3;
-    // // text.alignment = 'left';
+    drawMultiText(two, name, x, y + 20, font_family, color, textSize(3));
 }
 
 function drawYear(two, year, x, y) {
@@ -84,14 +103,14 @@ function drawYear(two, year, x, y) {
 
     var text = two.makeText(year, x, y + 20);
     text.family = font_family; //"Source Code Pro";
-    text.size = defaultTextSize - 2;
+    text.size = textSize(-2);
     text.fill = 'white';
 
     if (year % year_highlighted == 0) {
         // text.style = 'bold';
         text.weight = 600;
         // text.linewidth = 2;
-        text.size = text.size + 2;
+        text.size = text.size + 4;
     }
 
 }
@@ -100,19 +119,19 @@ function drawEvent1(two, name, year, color, textColor, level) {
     var x = yearX(two, year);
 
     var y = getPos(two) - 100 * level;
-    var fontSize = defaultTextSize + 3;
+    var fontSize = textSize(0);
 
-    var triangleUp = two.makePolygon(x, y - 25, 10); //, sides);
+    var triangleUp = two.makePolygon(x, y - adjustHeight(25), adjustHeight(10)); //, sides);
     triangleUp.fill = color;
     triangleUp.stroke = color;
 
-    var triangleDown = two.makePolygon(x, y + 25, 10); //, sides);
+    var triangleDown = two.makePolygon(x, y + adjustHeight(25), adjustHeight(10)); //, sides);
     triangleDown.fill = color;
     triangleDown.stroke = color;
     triangleDown.rotation = Math.PI;
 
     var textW = textWidth2(name, fontSize);
-    var rect = two.makeRoundedRectangle(x, y, textW + roundedRectangleWidthDelta, 40);
+    var rect = two.makeRoundedRectangle(x, y, textW + roundedRectangleWidthDelta, adjustHeight(40));
     rect.fill = color;
     rect.stroke = color;
 
@@ -121,7 +140,7 @@ function drawEvent1(two, name, year, color, textColor, level) {
     text.fill = textColor;
     text.size = fontSize;
 
-    var line = two.makeRectangle(x, two.height / 2, 3, two.height);
+    var line = two.makeRectangle(x, two.height / 2, adjustWidth(3), two.height);
     line.fill = color;
     line.stroke = color;
     line.linewidth = 0;
@@ -132,7 +151,7 @@ function drawEvent2(two, name, year, color, textColor, level) {
     var x = yearX(two, year);
 
     var y = getPos(two) - 100 * level;
-    var fontSize = defaultTextSize + 3;
+    var fontSize = textSize(3);
 
     var triangleDown = two.makePolygon(x, y + 25, 10); //, sides);
     triangleDown.fill = color;
@@ -228,7 +247,7 @@ function drawPerson(two, name, yearF, yearT, color, textColor, level) {
     // line.linewidth = 0;
 
 
-    drawMultiText(two, name, x, y - 25, font_family, textColor, defaultTextSize + 3);
+    drawMultiText(two, name, x, y - 25, font_family, textColor, textSize(3));
 
     var height = getPos(two) - (y + 22) - 10;
     drawDashedLine(two, x, y + 22, height, color);
