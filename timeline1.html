@@ -18,8 +18,12 @@
     <script src="./assets/js/helpers.js"></script>
     <script src="./assets/js/FileSaver.min.js"></script>
 
+    <!-- <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+    </style> -->
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;800&display=swap');
     </style>
 
 </head>
@@ -38,13 +42,18 @@
             }
         };
 
-        var year_from = -5500;
+        var year_from = -800;
         var year_to   =  2100;
         var year_from_x = 50;
-        var year_step = 500;
+        var year_step = 200;
         var year_highlighted = 1000;
+        var timeline_pos = 2 / 3;
+        var firstPeriodStart = 70;
         var background;
         var foreground;
+        // var two_width;
+        // var two_height;
+        var diagonal;
 
         // var font_family = "FiraCode";
         // var defaultTextSize = 13;
@@ -57,12 +66,17 @@
         // var textWidthFactor = 0.9;
 
         var font_family = "Open Sans";
-        var defaultTextSize = 14;
+        var defaultTextSize = 20;
         var roundedRectangleWidthDelta = 20;
         var textWidthFactor = 1;
 
         var two_width = document.getElementById('sequence').offsetWidth * 2;
         var two_height = document.getElementById('sequence').offsetHeight * 2;
+
+        console.log('two_width: ', two_width);
+        console.log('two_height: ', two_height);
+        diagonal = Math.hypot(two_width, two_height);
+        console.log('diagonal: ', diagonal);
 
         var two = new Two({
                 fullscreen: true,
@@ -72,40 +86,71 @@
         }).appendTo(sequence);
         background = two.makeGroup();
         foreground = two.makeGroup();
+        console.log('two.width: ', two.width);
+        console.log('two.height: ', two.height);
 
 
         drawTimeline(two);
 
         // Information ------------------------------------------------------------------------------------------------------------------------
 
-        drawPeriod(two, 'Predynastic Egypt', -5500, -3160, '#a79b0b', 1);
-        drawPeriod(two, 'Ancient Egypt', -3149, -332, '#a79b0b', 1);
+        // drawPeriod(two, 'Ancient Egypt', -860, -332, '#a79b0b', 1);
+        drawPeriod(two, 'Ancient Egypt', -860, -332, '#f0a912', 1);
+        
+
+        // drawPeriod(two, 'Achaemenid Empire\n(Persian)', -550, -330, '#b6275a', 3);
+        drawPeriod(two, 'Achaemenid Empire\n(Persian)', -550, -330, '#f01239', 3);
+
+
         // drawPeriod(two, 'Classical Greece', -550, -323, '#1898e0', 2);
         // drawPeriod(two, 'Hellenistic period', -322, -31, '#1898e0', 3);
-        drawPeriod(two, 'Ancient\nGreece', -550, -31, '#1898e0', 2);
+        drawPeriod(two, 'Ancient Greece', -550, -31, '#1898e0', 2);
 
-        drawPeriod(two, 'Roman\nEmpire', -27, 476, '#1898e0', 2);
+        drawPeriod(two, 'Roman Empire', -27, 476, '#1898e0', 2);
 
-        drawPeriod(two, 'Middle Ages', 477, 1492, '#8a8f92', 2);
+        // drawPeriod(two, 'Middle Ages', 477, 1492, '#8a8f92', 2);
+        drawPeriod(two, 'Middle Ages', 477, 1492, '#3d7798', 2);
+        
 
         // drawPeriod(two, 'Rashidun Caliphate', 632, 661, '#b15d42', 3);
         // drawPeriod(two, 'Umayyad Caliphate',  662, 750, '#b15d42', 4);
         // drawPeriod(two, 'Abbasid Caliphate',  751, 1517, '#b15d42', 3);
-        drawPeriod(two, 'Caliphates', 632, 1517, '#b15d42', 3);
-
-
-        drawEvent1(two, "First Algorithm", -2000, "#a79b0b", "white", 1);
-        drawEvent2(two, "Moscow Mathematical Papyrus", -1850, "#a79b0b", "white", 2);
-        drawEvent2(two, "Rhind Mathematical Papyrus", -1550, "#a79b0b", "white", 3);
-        drawEvent2(two, "Pyramids", -2700, "#a79b0b", "white", 1);
+        // drawPeriod(two, 'Caliphates', 632, 1517, '#b15d42', 3);
+        drawPeriod(two, 'Caliphates', 632, 1517, '#bd5700', 3);
 
 
         // drawEvent1(two, "Bitcoin: A P2P Electronic Cash System", 2008, "#0ac18e", "white", 1);       // 31-Oct-2008
-        drawEvent1(two, "Bitcoin", 2008, "#0ac18e", "white", 1);       // 31-Oct-2008
-        drawEvent1(two, "Today", new Date().getFullYear(), "#8a8f92", "white", -1);
+        drawEvent1(two, "Bitcoin", 2008, "#0ac18e", "white", 2);       // 31-Oct-2008
+        // drawEvent1(two, "Today", new Date().getFullYear(), "#8a8f92", "white", -1);
+        drawEvent1(two, "Today", new Date().getFullYear(), "#21c8cc", "white", -1);
+        
+
+        // drawEvent1(two, "Marathon", -490, "#1898e0", "white", -3);
+
+        drawEvent1(two, "AD 635", -635, "#1898e0", "white", 2);
 
 
-        drawEvent1(two, "Marathon", -490, "#1898e0", "white", -3);
+
+        drawPerson(two, "Thales of Miletus", -635, -545, "#1898e0", "white", 1);
+        // drawPerson(two, "Pythagoras", -570, -495, "#1898e0", "white", 2);
+
+        // drawPerson(two, "Plato", -428, -347, "#1898e0", "white", 1);
+        // drawPerson(two, "Aristotle", -384, -322, "#1898e0", "white", 2);
+        // drawPerson(two, "Euclid", -325, -275, "#1898e0", "white", 3);
+        // drawPerson(two, "Archimedes", -287, -212, "#1898e0", "white", 1);
+        // drawPerson(two, "Eratosthenes", -276, -194, "#1898e0", "white", 4);
+        // drawPerson(two, "Cicero", -106, -43, "#1898e0", "white", 1);
+        // drawPerson(two, "Diophantus", 200, 284, "#1898e0", "white", 1);
+
+
+
+
+
+
+
+
+
+
         // Information ------------------------------------------------------------------------------------------------------------------------
 
         two.update();

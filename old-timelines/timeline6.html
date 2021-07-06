@@ -47,8 +47,10 @@
         var year_from_x = 50;
         var year_step = 50;
         var year_highlighted = 100;
+        var firstPeriodStart = 70;
         var background;
         var foreground;
+        var diagonal;
 
         // var font_family = "FiraCode";
         // var defaultTextSize = 13;
@@ -70,6 +72,8 @@
 
         var two_width = document.getElementById('sequence').offsetWidth * 2;
         var two_height = document.getElementById('sequence').offsetHeight * 2;
+        diagonal = Math.hypot(two_width, two_height);
+        console.log('diagonal: ', diagonal);
 
         var two = new Two({
                 fullscreen: true,
